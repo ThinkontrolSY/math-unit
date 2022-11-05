@@ -13,6 +13,10 @@ type Measure struct {
 	value float64
 }
 
+func NewMeasure(unit Unit, value float64) Measure {
+	return Measure{unit: unit, value: value}
+}
+
 func (m Measure) String() string {
 	return fmt.Sprintf("%v %v", m.value, m.unit)
 }
