@@ -67,3 +67,10 @@ func (m Measure) Div(other Measure) (Measure, error) {
 	}
 	return Measure{u, m.value / other.value * c}, nil
 }
+
+func (m Measure) Multiply(v float64) Measure {
+	return Measure{m.unit, m.value * v}
+}
+func (m Measure) Divide(v float64) Measure {
+	return Measure{m.unit, m.value / v}
+}
