@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type DigitalStorage string
 
 const (
@@ -210,79 +208,14 @@ func (d DigitalStorage) Coefficient() float64 {
 	return 1
 }
 
-func ParseDigitalStorage(s string) (DigitalStorage, error) {
-	switch s {
-	case "b":
-		return Bit, nil
-	case "Kib":
-		return Kibibit, nil
-	case "Mib":
-		return Mebibit, nil
-	case "Gib":
-		return Gibibit, nil
-	case "Tib":
-		return Tebibit, nil
-	case "Pib":
-		return Pebibit, nil
-	case "Eib":
-		return Exbibit, nil
-	case "Zib":
-		return Zebibit, nil
-	case "Yib":
-		return Yobibit, nil
+func (d DigitalStorage) Mul(b Unit) (Unit, float64) {
+	return nil, 0
+}
 
-	case "B":
-		return Byte, nil
-	case "KiB":
-		return Kibibyte, nil
-	case "MiB":
-		return Mebibyte, nil
-	case "GiB":
-		return Gibibyte, nil
-	case "TiB":
-		return Tebibyte, nil
-	case "PiB":
-		return Pebibyte, nil
-	case "EiB":
-		return Exbibyte, nil
-	case "ZiB":
-		return Zebibyte, nil
-	case "YiB":
-		return Yobibyte, nil
-
-	case "kb":
-		return Kilobit, nil
-	case "Mb":
-		return Megabit, nil
-	case "Gb":
-		return Gigabit, nil
-	case "Tb":
-		return Terabit, nil
-	case "Pb":
-		return Petabit, nil
-	case "Eb":
-		return Exabit, nil
-	case "Zb":
-		return Zettabit, nil
-	case "Yb":
-		return Yottabit, nil
-
-	case "kB":
-		return Kilobyte, nil
-	case "MB":
-		return Megabyte, nil
-	case "GB":
-		return Gigabyte, nil
-	case "TB":
-		return Terabyte, nil
-	case "PB":
-		return Petabyte, nil
-	case "EB":
-		return Exabyte, nil
-	case "ZB":
-		return Zettabyte, nil
-	case "YB":
-		return Yottabyte, nil
+func (d DigitalStorage) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case DigitalStorage:
+		return Dimensionless, d.Coefficient() / b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown digital storage unit %q", s)
+	return nil, 0
 }

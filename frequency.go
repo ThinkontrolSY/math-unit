@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Frequency string
 
 const (
@@ -181,68 +179,18 @@ func (f Frequency) Coefficient() float64 {
 	return 1
 }
 
-func ParseFrequency(s string) (Frequency, error) {
-	switch s {
-	case "Hz":
-		return Hertz, nil
-	case "kHz":
-		return Kilohertz, nil
-	case "MHz":
-		return Megahertz, nil
-	case "GHz":
-		return Gigahertz, nil
-	case "THz":
-		return Terahertz, nil
-	case "PHz":
-		return Petahertz, nil
-	case "EHz":
-		return Exahertz, nil
-	case "ZHz":
-		return Zettahertz, nil
-	case "YHz":
-		return Yottahertz, nil
-	case "rad/s":
-		return RadianPerSecond, nil
-	case "rpm":
-		return RevolutionsPerMinute, nil
-	case "rps":
-		return RevolutionsPerSecond, nil
-	case "rph":
-		return RevolutionsPerHour, nil
-	case "bpm":
-		return BeatsPerMinute, nil
-	case "bps":
-		return BeatsPerSecond, nil
-	case "bph":
-		return BeatsPerHour, nil
-	case "cps":
-		return CyclesPerSecond, nil
-	case "cpm":
-		return CyclesPerMinute, nil
-	case "cph":
-		return CyclesPerHour, nil
-	case "daHz":
-		return Decahertz, nil
-	case "dHz":
-		return Decihertz, nil
-	case "cHz":
-		return Centihertz, nil
-	case "mHz":
-		return Millihertz, nil
-	case "µHz":
-		return Microhertz, nil
-	case "nHz":
-		return Nanohertz, nil
-	case "pHz":
-		return Picohertz, nil
-	case "fHz":
-		return Femtohertz, nil
-	case "aHz":
-		return Attohertz, nil
-	case "zHz":
-		return Zeptohertz, nil
-	case "yHz":
-		return Yoctohertz, nil
+func (f Frequency) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Duration:
+		return Radian, Radian.Coefficient() * f.Coefficient() / b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown frequency unit %s", s)
+	return nil, 0
+}
+
+func (f Frequency) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Frequency:
+		return Dimensionless, f.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }

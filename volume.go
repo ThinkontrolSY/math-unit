@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Volume string
 
 const (
@@ -146,54 +144,20 @@ func (v Volume) Coefficient() float64 {
 	return 1
 }
 
-func ParseVolume(s string) (Volume, error) {
-	switch s {
-	case "l":
-		return Liter, nil
-	case "ml":
-		return Milliliter, nil
-	case "m³":
-		return CubicMeter, nil
-	case "cm³":
-		return CubicCentimeter, nil
-	case "mm³":
-		return CubicMillimeter, nil
-	case "in³":
-		return CubicInch, nil
-	case "ft³":
-		return CubicFoot, nil
-	case "yd³":
-		return CubicYard, nil
-	case "mi³":
-		return CubicMile, nil
-	case "nmi³":
-		return CubicNauticalMile, nil
-	case "ac ft":
-		return AcreFoot, nil
-	case "ac in":
-		return AcreInch, nil
-	case "bbl":
-		return Barrel, nil
-	case "bu":
-		return Bushel, nil
-	case "cd":
-		return Cord, nil
-	case "cup":
-		return Cup, nil
-	case "fl oz":
-		return FluidOunce, nil
-	case "gal":
-		return Gallon, nil
-	case "pk":
-		return Peck, nil
-	case "pt":
-		return Pint, nil
-	case "qt":
-		return Quart, nil
-	case "tbsp":
-		return Tablespoon, nil
-	case "tsp":
-		return Teaspoon, nil
+func (v Volume) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case PackageUnit:
+		return v, b.Coefficient()
 	}
-	return "", fmt.Errorf("invalid volume unit %q", s)
+	return nil, 0
+}
+
+func (v Volume) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case PackageUnit:
+		return v, 1 / b.Coefficient()
+	case Volume:
+		return Bottle, v.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }

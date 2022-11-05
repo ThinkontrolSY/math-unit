@@ -38,52 +38,7 @@ func (m Measure) Values() []string {
 }
 
 func (m Measure) Compatable(other Measure) bool {
-	return reflect.TypeOf(m) == reflect.TypeOf(other)
-}
-
-func (m Measure) Convert(to Unit) Measure {
-	return Measure{to, m.value * m.unit.Coefficient() / to.Coefficient()}
-}
-
-func (m Measure) Add(other Measure) Measure {
-	return Measure{m.unit, m.value + other.Convert(m.unit).value}
-}
-
-func (m Measure) Sub(other Measure) Measure {
-	return Measure{m.unit, m.value - other.Convert(m.unit).value}
-}
-
-func (m Measure) EQ(other Measure) bool {
-	return m.value == other.Convert(m.unit).value
-}
-
-func (m Measure) NEQ(other Measure) bool {
-	return m.value != other.Convert(m.unit).value
-}
-
-func (m Measure) LT(other Measure) bool {
-	return m.value < other.Convert(m.unit).value
-}
-
-func (m Measure) LTE(other Measure) bool {
-	return m.value <= other.Convert(m.unit).value
-}
-
-func (m Measure) GT(other Measure) bool {
-	return m.value > other.Convert(m.unit).value
-}
-
-func (m Measure) GTE(other Measure) bool {
-	return m.value >= other.Convert(m.unit).value
-}
-
-func (m Measure) Compare(other Measure) int {
-	if m.value < other.Convert(m.unit).value {
-		return -1
-	} else if m.value > other.Convert(m.unit).value {
-		return 1
-	}
-	return 0
+	return reflect.TypeOf(m.unit) == reflect.TypeOf(other.unit)
 }
 
 func (v Measure) MarshalJSON() ([]byte, error) {

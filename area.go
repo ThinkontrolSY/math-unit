@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Area string
 
 const (
@@ -93,40 +91,26 @@ func (a Area) Values() []string {
 }
 
 func (a Area) Valid() bool {
-	_, err := ParseArea(a.String())
-	return err == nil
+	for _, v := range a.Values() {
+		if v == string(a) {
+			return true
+		}
+	}
+	return false
 }
 
-func ParseArea(s string) (Area, error) {
-	switch s {
-	case "m²":
-		return SquareMeter, nil
-	case "km²":
-		return SquareKilometer, nil
-	case "cm²":
-		return SquareCentimeter, nil
-	case "mm²":
-		return SquareMillimeter, nil
-	case "µm²":
-		return SquareMicrometer, nil
-	case "nm²":
-		return SquareNanometer, nil
-	case "Å²":
-		return SquareAngstrom, nil
-	case "in²":
-		return SquareInch, nil
-	case "ft²":
-		return SquareFoot, nil
-	case "yd²":
-		return SquareYard, nil
-	case "mi²":
-		return SquareMile, nil
-	case "nmi²":
-		return SquareNauticalMile, nil
-	case "ac":
-		return Acre, nil
-	case "ha":
-		return Hectare, nil
+func (a Area) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Length:
+		return CubicMeter, a.Coefficient() * b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown area unit %q", s)
+	return nil, 0
+}
+
+func (a Area) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Area:
+		return Dimensionless, a.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }

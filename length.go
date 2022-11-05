@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Length string
 
 const (
@@ -65,8 +63,12 @@ func (l Length) Values() []string {
 }
 
 func (l Length) Valid() bool {
-	_, err := ParseLength(l.String())
-	return err == nil
+	for _, v := range l.Values() {
+		if string(l) == v {
+			return true
+		}
+	}
+	return false
 }
 
 func (l Length) Coefficient() float64 {
@@ -105,38 +107,24 @@ func (l Length) Coefficient() float64 {
 	return 1
 }
 
-func ParseLength(s string) (Length, error) {
-	switch s {
-	case "m":
-		return Meter, nil
-	case "km":
-		return Kilometer, nil
-	case "cm":
-		return Centimeter, nil
-	case "mm":
-		return Millimeter, nil
-	case "µm":
-		return Micrometer, nil
-	case "nm":
-		return Nanometer, nil
-	case "Å":
-		return Angstrom, nil
-	case "in":
-		return Inch, nil
-	case "ft":
-		return Foot, nil
-	case "yd":
-		return Yard, nil
-	case "mi":
-		return Mile, nil
-	case "nmi":
-		return NauticalMile, nil
-	case "au":
-		return AstronomicalUnit, nil
-	case "ly":
-		return LightYear, nil
-	case "pc":
-		return Parsec, nil
+func (l Length) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Length:
+		return SquareMeter, l.Coefficient() * b.Coefficient()
+	case Area:
+		return CubicMeter, l.Coefficient() * b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown length unit: %s", s)
+	return nil, 0
+}
+
+func (l Length) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Length:
+		return Dimensionless, l.Coefficient() / b.Coefficient()
+	case Duration:
+		return MeterPerSecond, l.Coefficient() / b.Coefficient()
+	case Speed:
+		return Second, l.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }

@@ -9,6 +9,9 @@ type Unit interface {
 	Values() []string
 
 	Valid() bool
+
+	Mul(Unit) (Unit, float64)
+	Div(Unit) (Unit, float64)
 }
 
 func Group() map[string][]string {
@@ -22,6 +25,8 @@ func Group() map[string][]string {
 	ug["mass"] = Mass("").Values()
 	ug["package_unit"] = PackageUnit("").Values()
 	ug["volume"] = Volume("").Values()
+	ug["duration"] = Duration("").Values()
+	ug["speed"] = Speed("").Values()
 	return ug
 }
 
@@ -51,6 +56,12 @@ func Parse(src string) Unit {
 		return u
 	}
 	if u := Volume(src); u.Valid() {
+		return u
+	}
+	if u := Duration(src); u.Valid() {
+		return u
+	}
+	if u := Speed(src); u.Valid() {
 		return u
 	}
 	return nil

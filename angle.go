@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Angle string
 
 const (
@@ -60,20 +58,18 @@ func (a Angle) Valid() bool {
 	return false
 }
 
-func ParseAngle(s string) (Angle, error) {
-	switch s {
-	case "rad":
-		return Radian, nil
-	case "deg":
-		return Degree, nil
-	case "grad":
-		return Grad, nil
-	case "arcmin":
-		return ArcMinute, nil
-	case "arcsec":
-		return ArcSecond, nil
-	case "rev":
-		return Revolution, nil
+func (a Angle) Mul(b Unit) (Unit, float64) {
+	return nil, 0
+}
+
+func (a Angle) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Angle:
+		return Dimensionless, a.Coefficient() / b.Coefficient()
+	case Duration:
+		return RadianPerSecond, a.Coefficient() / b.Coefficient()
+	case Frequency:
+		return Radian, a.Coefficient() / b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown angle unit: %s", s)
+	return nil, 0
 }

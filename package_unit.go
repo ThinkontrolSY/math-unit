@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type PackageUnit string
 
 const (
@@ -77,30 +75,18 @@ func (p PackageUnit) Coefficient() float64 {
 	return 1
 }
 
-func ParsePackageUnit(s string) (PackageUnit, error) {
-	switch s {
-	case "doz":
-		return Dozen, nil
-	case "ddoz":
-		return Doubledozen, nil
-	case "hdoz":
-		return Halfdozen, nil
-	case "3doz":
-		return Threedozens, nil
-	case "4doz":
-		return Fourdozens, nil
-	case "grs":
-		return Gross, nil
-	case "ggrs":
-		return Greatgross, nil
-	case "box":
-		return Box, nil
-	case "bag":
-		return Bag, nil
-	case "btl":
-		return Bottle, nil
-	case "can":
-		return Can, nil
+func (p PackageUnit) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Mass, Volume:
+		return b, p.Coefficient()
 	}
-	return "", fmt.Errorf("unknown package unit: %s", s)
+	return nil, 0
+}
+
+func (p PackageUnit) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case PackageUnit:
+		return Dimensionless, p.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }

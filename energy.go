@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Energy string
 
 const (
@@ -172,64 +170,14 @@ func (e Energy) Coefficient() float64 {
 	return 1
 }
 
-func ParseEnergy(s string) (Energy, error) {
-	switch s {
-	case "J":
-		return Joule, nil
-	case "kJ":
-		return Kilojoule, nil
-	case "MJ":
-		return Megajoule, nil
-	case "GJ":
-		return Gigajoule, nil
-	case "TJ":
-		return Terajoule, nil
-	case "PJ":
-		return Petajoule, nil
-	case "EJ":
-		return Exajoule, nil
-	case "ZJ":
-		return Zettajoule, nil
-	case "YJ":
-		return Yottajoule, nil
+func (e Energy) Mul(b Unit) (Unit, float64) {
+	return nil, 0
+}
 
-	case "Wh":
-		return WattHour, nil
-	case "kWh":
-		return KilowattHour, nil
-	case "MWh":
-		return MegawattHour, nil
-	case "GWh":
-		return GigawattHour, nil
-	case "TWh":
-		return TerawattHour, nil
-	case "PWh":
-		return PetawattHour, nil
-	case "EWh":
-		return ExawattHour, nil
-	case "ZWh":
-		return ZettawattHour, nil
-	case "YWh":
-		return YottawattHour, nil
-
-	case "cal":
-		return Calorie, nil
-	case "kcal":
-		return Kilocalorie, nil
-	case "Mcal":
-		return Megacalorie, nil
-	case "Gcal":
-		return Gigacalorie, nil
-	case "Tcal":
-		return Teracalorie, nil
-	case "Pcal":
-		return Petacalorie, nil
-	case "Ecal":
-		return Exacalorie, nil
-	case "Zcal":
-		return Zettacalorie, nil
-	case "Ycal":
-		return Yottacalorie, nil
+func (e Energy) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case Energy:
+		return Dimensionless, e.Coefficient() / b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown energy unit %q", s)
+	return nil, 0
 }

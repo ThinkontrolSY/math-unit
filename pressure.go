@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 type Pressure string
 
 const (
@@ -167,8 +165,12 @@ func (p Pressure) Values() []string {
 }
 
 func (p Pressure) Valid() bool {
-	_, err := ParsePressure(p.String())
-	return err == nil
+	for _, v := range p.Values() {
+		if v == string(p) {
+			return true
+		}
+	}
+	return false
 }
 
 func (p Pressure) Coefficient() float64 {
@@ -276,107 +278,10 @@ func (p Pressure) Coefficient() float64 {
 	}
 }
 
-func ParsePressure(s string) (Pressure, error) {
-	switch s {
-	case "Pa":
-		return Pascal, nil
-	case "kPa":
-		return KiloPascal, nil
-	case "MPa":
-		return MegaPascal, nil
-	case "GPa":
-		return GigaPascal, nil
-	case "TPa":
-		return TeraPascal, nil
-	case "PPa":
-		return PetaPascal, nil
-	case "EPa":
-		return ExaPascal, nil
-	case "ZPa":
-		return ZettaPascal, nil
-	case "YPa":
-		return YottaPascal, nil
-	case "hPa":
-		return HectoPascal, nil
-	case "daPa":
-		return DekaPascal, nil
-	case "dPa":
-		return DeciPascal, nil
-	case "cPa":
-		return CentiPascal, nil
-	case "mPa":
-		return MilliPascal, nil
-	case "µPa":
-		return MicroPascal, nil
-	case "nPa":
-		return NanoPascal, nil
-	case "pPa":
-		return PicoPascal, nil
-	case "fPa":
-		return FemtoPascal, nil
-	case "aPa":
-		return AttoPascal, nil
-	case "zPa":
-		return ZeptoPascal, nil
-	case "yPa":
-		return YoctoPascal, nil
-	case "bar":
-		return Bar, nil
-	case "mbar":
-		return MilliBar, nil
-	case "µbar":
-		return MicroBar, nil
-	case "nbar":
-		return NanoBar, nil
-	case "pbar":
-		return PicoBar, nil
-	case "fbar":
-		return FemtoBar, nil
-	case "abar":
-		return AttoBar, nil
-	case "zbar":
-		return ZeptoBar, nil
-	case "ybar":
-		return YoctoBar, nil
-	case "atm":
-		return Atmosphere, nil
-	case "at":
-		return TechnicalAtmosphere, nil
-	case "matm":
-		return MilliAtmosphere, nil
-	case "µatm":
-		return MicroAtmosphere, nil
-	case "natm":
-		return NanoAtmosphere, nil
-	case "patm":
-		return PicoAtmosphere, nil
-	case "fatm":
-		return FemtoAtmosphere, nil
-	case "aatm":
-		return AttoAtmosphere, nil
-	case "zatm":
-		return ZeptoAtmosphere, nil
-	case "yatm":
-		return YoctoAtmosphere, nil
-	case "torr":
-		return Torr, nil
-	case "mtorr":
-		return MilliTorr, nil
-	case "µtorr":
-		return MicroTorr, nil
-	case "ntorr":
-		return NanoTorr, nil
-	case "ptorr":
-		return PicoTorr, nil
-	case "ftorr":
-		return FemtoTorr, nil
-	case "atorr":
-		return AttoTorr, nil
-	case "ztorr":
-		return ZeptoTorr, nil
-	case "ytorr":
-		return YoctoTorr, nil
-	default:
-		return "", fmt.Errorf("unknown pressure unit %q", s)
-	}
+func (p Pressure) Mul(b Unit) (Unit, float64) {
+	return nil, 0
+}
+
+func (p Pressure) Div(b Unit) (Unit, float64) {
+	return nil, 0
 }

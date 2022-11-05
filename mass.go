@@ -1,7 +1,5 @@
 package mathunit
 
-import "fmt"
-
 // Mass represents a SI unit of mass (in grams, G)
 type Mass string
 
@@ -84,28 +82,20 @@ func (m Mass) Coefficient() float64 {
 	return 1
 }
 
-func ParseMass(s string) (Mass, error) {
-	switch s {
-	case "g":
-		return Gram, nil
-	case "kg":
-		return Kilogram, nil
-	case "t":
-		return Ton, nil
-	case "µg":
-		return Microgram, nil
-	case "mg":
-		return Milligram, nil
-	case "lb":
-		return Pound, nil
-	case "oz":
-		return Ounce, nil
-	case "st":
-		return Stone, nil
-	case "slug":
-		return Slug, nil
-	case "ct":
-		return Carat, nil
+func (m Mass) Mul(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case PackageUnit:
+		return m, b.Coefficient()
 	}
-	return "", fmt.Errorf("unknown mass unit %q", s)
+	return nil, 0
+}
+
+func (m Mass) Div(b Unit) (Unit, float64) {
+	switch b.(type) {
+	case PackageUnit:
+		return m, 1 / b.Coefficient()
+	case Mass:
+		return Bottle, m.Coefficient() / b.Coefficient()
+	}
+	return nil, 0
 }
