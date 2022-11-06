@@ -80,6 +80,10 @@ func (d DigitalStorage) String() string {
 	return string(d)
 }
 
+func (d DigitalStorage) UnitType() string {
+	return "digital_storage"
+}
+
 func (d DigitalStorage) Values() []string {
 	return []string{
 		string(Bit),

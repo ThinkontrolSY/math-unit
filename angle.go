@@ -21,6 +21,10 @@ func (a Angle) String() string {
 	return string(a)
 }
 
+func (a Angle) UnitType() string {
+	return "angle"
+}
+
 func (a Angle) Coefficient() float64 {
 	switch a {
 	case Radian:

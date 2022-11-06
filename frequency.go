@@ -69,6 +69,10 @@ func (f Frequency) String() string {
 	return string(f)
 }
 
+func (f Frequency) UnitType() string {
+	return "frequency"
+}
+
 func (f Frequency) Values() []string {
 	return []string{
 		"Hz",

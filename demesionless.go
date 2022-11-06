@@ -10,6 +10,10 @@ func (d Dimension) String() string {
 	return string(d)
 }
 
+func (d Dimension) UnitType() string {
+	return "dimensionless"
+}
+
 func (d Dimension) Coefficient() float64 {
 	return 1
 }

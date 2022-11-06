@@ -42,6 +42,10 @@ func (l Length) String() string {
 	return string(l)
 }
 
+func (l Length) UnitType() string {
+	return "length"
+}
+
 func (l Length) Values() []string {
 	return []string{
 		"m",

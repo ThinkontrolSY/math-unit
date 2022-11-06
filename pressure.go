@@ -110,6 +110,10 @@ func (p Pressure) String() string {
 	return string(p)
 }
 
+func (p Pressure) UnitType() string {
+	return "pressure"
+}
+
 func (p Pressure) Values() []string {
 	return []string{
 		string(Pascal),

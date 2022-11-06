@@ -37,6 +37,10 @@ func (a Area) String() string {
 	return string(a)
 }
 
+func (a Area) UnitType() string {
+	return "area"
+}
+
 func (a Area) Coefficient() float64 {
 	switch a {
 	case SquareMeter:

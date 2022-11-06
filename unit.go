@@ -2,6 +2,7 @@ package mathunit
 
 type Unit interface {
 	// String returns the name of the unit
+	UnitType() string
 	String() string
 
 	Coefficient() float64
@@ -27,6 +28,7 @@ func Group() map[string][]string {
 	ug["volume"] = Volume("").Values()
 	ug["duration"] = Duration("").Values()
 	ug["speed"] = Speed("").Values()
+	ug["pressure"] = Pressure("").Values()
 	return ug
 }
 

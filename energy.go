@@ -65,6 +65,10 @@ func (e Energy) String() string {
 	return string(e)
 }
 
+func (e Energy) UnitType() string {
+	return "energy"
+}
+
 func (e Energy) Values() []string {
 	return []string{
 		string(Joule),

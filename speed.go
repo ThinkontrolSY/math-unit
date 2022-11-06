@@ -33,6 +33,10 @@ func (s Speed) String() string {
 	return string(s)
 }
 
+func (s Speed) UnitType() string {
+	return "speed"
+}
+
 func (s Speed) Coefficient() float64 {
 	switch s {
 	case MeterPerSecond:

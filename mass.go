@@ -33,6 +33,10 @@ func (m Mass) String() string {
 	return string(m)
 }
 
+func (m Mass) UnitType() string {
+	return "mass"
+}
+
 func (m Mass) Values() []string {
 	return []string{
 		"g",

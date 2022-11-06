@@ -29,6 +29,10 @@ func (d Duration) String() string {
 	return string(d)
 }
 
+func (d Duration) UnitType() string {
+	return "duration"
+}
+
 func (d Duration) Coefficient() float64 {
 	switch d {
 	case Second:

@@ -55,6 +55,10 @@ func (v Volume) String() string {
 	return string(v)
 }
 
+func (v Volume) UnitType() string {
+	return "volume"
+}
+
 func (v Volume) Values() []string {
 	return []string{
 		"l",

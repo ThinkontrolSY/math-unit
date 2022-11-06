@@ -23,6 +23,10 @@ func (p PackageUnit) String() string {
 	return string(p)
 }
 
+func (p PackageUnit) UnitType() string {
+	return "package_unit"
+}
+
 func (p PackageUnit) Values() []string {
 	return []string{
 		"doz",
